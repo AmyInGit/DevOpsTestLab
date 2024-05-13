@@ -1,4 +1,5 @@
 Add-Type -AssemblyName System.IO.Compression.FileSystem
+Enable-WindowsOptionalFeature -Online -FeatureName "IIS-WebServer" -All
 Import-Module WebAdministration
 
 $WebName = "TestSite"
@@ -58,7 +59,7 @@ else
 	{
 		Remove-Item -Path "DotNetCore.WindowsHosting.exe" -Force
 	}
-	Invoke-WebRequest -Uri "https://aka.ms/dotnetcore.2.0.0-windowshosting" -OutFile "DotNetCore.WindowsHosting.exe"
+	Invoke-WebRequest -Uri "https://download.visualstudio.microsoft.com/download/pr/00397fee-1bd9-44ef-899b-4504b26e6e96/ab9c73409659f3238d33faee304a8b7c/dotnet-hosting-8.0.4-win.exe" -OutFile "DotNetCore.WindowsHosting.exe"
 	
 	Write-Host "Installing DotNetCore.WindowsHosting."
 	Start-Process "DotNetCore.WindowsHosting.exe" -Wait -ArgumentList '/S', '/v', '/qn' -passthru
@@ -67,6 +68,8 @@ else
 		Remove-Item -Path "DotNetCore.WindowsHosting.exe" -Force
 	}
 }
+
+
 
 Write-Host "Creating $WebPath and index.html file..."
 New-Item -ItemType Directory -Path "$WebPath"
